@@ -8,15 +8,19 @@ terraform {
 }
 
 provider "aws" {
-   region = "eu-west-1"
+  region = "eu-west-1"
 }
 
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
+resource "aws_s3_bucket" "crc-frontend" {
+  bucket = "crc-frontend-static"
+}
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+resource "aws_s3_bucket_website_configuration" "crc-frontend-web-conf" {
+  bucket = aws_s3_bucket.crc-frontend.id
+
+  index_document {
+    suffix = "index.html"
   }
 }
-# test
+
+# ff
