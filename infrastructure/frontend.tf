@@ -33,7 +33,7 @@ resource "aws_s3_bucket_public_access_block" "crc-frontend-public-access" {
 
 resource "aws_s3_bucket_acl" "example" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.ownership-control,
+    aws_s3_bucket_ownership_controls.crc-frontend-ownership-control,
     aws_s3_bucket_public_access_block.crc-frontend-public-access,
   ]
 
