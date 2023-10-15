@@ -51,6 +51,7 @@ jobs:
           comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
 
   S3PackageUpload:
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -64,5 +65,5 @@ jobs:
       # Upload a file to AWS s3
       - name:  Copy index.html to s3
         run: |
-          aws s3 cp ./index.html s3://${{ env.BUCKET_NAME }}/
-          aws s3 cp ./style.css s3://${{ env.BUCKET_NAME }}/
+          aws s3 cp ./front-end/index.html s3://${{ env.BUCKET_NAME }}/
+          aws s3 cp ./front-end/style.css s3://${{ env.BUCKET_NAME }}/
