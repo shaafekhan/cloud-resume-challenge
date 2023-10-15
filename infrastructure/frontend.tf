@@ -43,7 +43,7 @@ resource "aws_s3_bucket_acl" "crc-frontend-acl" {
 
 resource "aws_s3_bucket_policy" "public-access" {
   bucket = aws_s3_bucket.crc-frontend.id
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+  policy = data.aws_iam_policy_document.public-access.json
 }
 
 data "aws_iam_policy_document" "public-access" {
