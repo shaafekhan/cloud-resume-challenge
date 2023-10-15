@@ -5,11 +5,18 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+
 env:
   TF_CLOUD_ORGANIZATION: "shaafekhan"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "cloud-resume-challenge"
   CONFIG_DIRECTORY: "./infrastructure"
+  BUCKET_NAME: "${{ secrets.BUCKET_NAME }}"
+  AWS_GH_ARN: "${{ secrets.AWS_GH_ARN }}"
 
 jobs:
   terraform:
@@ -42,3 +49,20 @@ jobs:
         with:
           run: ${{ steps.apply-run.outputs.run_id }}
           comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
+
+  S3PackageUpload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ env.AWS_GH_ARN }}
+          role-session-name: samplerolesession
+          aws-region: eu-west-1
+      # Upload a file to AWS s3
+      - name:  Copy index.html to s3
+        run: |
+          aws s3 cp ./index.html s3://${{ env.BUCKET_NAME }}/
+          aws s3 cp ./style.css s3://${{ env.BUCKET_NAME }}/
