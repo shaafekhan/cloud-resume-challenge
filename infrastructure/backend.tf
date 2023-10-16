@@ -7,10 +7,5 @@ resource "aws_dynamodb_table" "crc-backend-database" {
       name = "id"
       type = "N"
     }
-
-    attribute {
-      name = "countValue"
-      type = "N"
-    }
   
 }
