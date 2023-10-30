@@ -1,28 +1,16 @@
-import json
 import boto3
-
-# Initialize dynamodb boto3 object
-dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
     # Set up dynamodb table object
-    table = dynamodb.Table('crc-backend-table')
+    dynamodbClient = boto3.client('dynamodb', region_name='eu-west-1')
 
     # Atomic update an item in table or add if doesn't exist
-    ddbResponse = table.update_item(
-        Key={
-            "id": {
-                "N": "0"
-            }
-        },
-
-        ExpressionAttributeValues = {
-            ':increase': {
-                'N': 1,
-            },
-        },
-        UpdateExpression = 'ADD count :increase',
-        # UpdateExpression = 'ADD #usage :increase', 
+    ddbResponse = dynamodbClient.update_item(
+        TableName='crc-backend-table',
+        Key={'id': {'N': '0'}},
+        UpdateExpression="SET #countValue = #countValue + :increment",
+        ExpressionAttributeNames={'#countValue': 'countValue'},
+        ExpressionAttributeValues={':increment': {'N': '1'}},
         ReturnValues = 'UPDATED_NEW'
     )
 
