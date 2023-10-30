@@ -20,9 +20,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: zip lambda
-        run: zip infrastructure/dbupdate.zip back-end/updateDBEvent.py
-
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: plan-upload
