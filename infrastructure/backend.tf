@@ -15,7 +15,8 @@ resource "aws_dynamodb_table_item" "crc-backend-database-item" {
 
   item = <<ITEM
 {
-  "id": {"N": "0"}
+  "id": {"N": "0"},
+  "count": {"N": "0"}
 }
 ITEM
 }
