@@ -10,3 +10,13 @@ terraform {
 provider "aws" {
   region = "eu-west-1"
 }
+
+module "backend" {
+  source = "./back-end"
+  
+}
+
+module "frontend" {
+  source = "./front-end"
+  
+}
