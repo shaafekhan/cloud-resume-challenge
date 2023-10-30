@@ -29,8 +29,15 @@ data "archive_file" "lambda_db_counter" {
   output_path = "${path.module}/updateDBEvent.zip"
 }
 
-resource "aws_s3_bucket" "lambda_bucket" {
+resource "aws_s3_bucket" "crc-lambda-storage-bucket" {
   bucket = "crc-lambda-storage-bucket"
+}
+
+resource "aws_s3_bucket_ownership_controls" "crc-lambda-bucket-ownership-control" {
+  bucket = aws_s3_bucket.crc-lambda-storage-bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
