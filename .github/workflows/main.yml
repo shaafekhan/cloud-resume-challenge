@@ -14,7 +14,7 @@ env:
   TF_CLOUD_ORGANIZATION: "shaafekhan"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "cloud-resume-challenge"
-  CONFIG_DIRECTORY: "./infrastructure"
+  CONFIG_DIRECTORY: "."
   BUCKET_NAME: "${{ secrets.BUCKET_NAME }}"
   AWS_GH_ARN: "${{ secrets.AWS_GH_ARN }}"
 
