@@ -41,12 +41,12 @@ resource "aws_s3_bucket_ownership_controls" "crc-lambda-bucket-ownership-control
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.lambda_bucket.id
+  bucket = aws_s3_bucket.crc-lambda-storage-bucket.id
   acl    = "private"
 }
 
 resource "aws_s3_object" "lambda_db_counter_s3_obj" {
-  bucket = aws_s3_bucket.lambda_bucket.id
+  bucket = aws_s3_bucket.crc-lambda-storage-bucket.id
 
   key    = "updateDBEvent.zip"
   source = data.archive_file.lambda_db_counter.output_path
@@ -58,7 +58,7 @@ resource "aws_s3_object" "lambda_db_counter_s3_obj" {
 resource "aws_lambda_function" "counter-resume-challenge" {
   function_name = "resume-challenge-counter"
 
-  s3_bucket = aws_s3_bucket.lambda_bucket.id
+  s3_bucket = aws_s3_bucket.crc-lambda-storage-bucket.id
   s3_key    = aws_s3_object.lambda_db_counter_s3_obj.key
 
   runtime = "python3.11"
