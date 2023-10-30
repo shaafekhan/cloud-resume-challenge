@@ -24,7 +24,7 @@ def lambda_handler(event, context):
                 'N': count,
             },
         },
-        UpdateExpression = 'SET #count = #count + :increase',
+        UpdateExpression = 'ADD #count :increase',
         # UpdateExpression = 'ADD #usage :increase', 
         ReturnValues = 'UPDATED_NEW'
     )
