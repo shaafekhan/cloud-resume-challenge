@@ -30,7 +30,7 @@ data "archive_file" "lambda_db_counter" {
 }
 
 resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "lambda-bucket"
+  bucket = "crc-lambda-storage-bucket"
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
