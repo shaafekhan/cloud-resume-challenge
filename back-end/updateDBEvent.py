@@ -5,7 +5,6 @@ import boto3
 dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
-    count = 1
     # Set up dynamodb table object
     table = dynamodb.Table('crc-backend-table')
 
@@ -16,15 +15,13 @@ def lambda_handler(event, context):
                 "N": "0"
             }
         },
-        ExpressionAttributeNames = {
-            '#count': 'count'
-        },
+
         ExpressionAttributeValues = {
             ':increase': {
-                'N': count,
+                'N': 1,
             },
         },
-        UpdateExpression = 'SET #count = #count + :increase',
+        UpdateExpression = 'ADD count :increase',
         # UpdateExpression = 'ADD #usage :increase', 
         ReturnValues = 'UPDATED_NEW'
     )
